@@ -1,0 +1,16 @@
+.useritem {
+	padding: 1px;
+	margin-top: 5px;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+.useritem div {
+	border: 1px solid #ccc;
+	cursor: pointer;
+}
+
+.useritem div:focus {
+	outline: none;
+	border-color: #4f005f;
+}

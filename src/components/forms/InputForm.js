@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import Button from "../uis/Button";
+
 const InputForm = (props) => {
 	const [userName, setUserName] = useState("");
 	const [userAge, setUserAge] = useState("");
@@ -7,11 +9,22 @@ const InputForm = (props) => {
 	const submitHandler = (event) => {
 		event.preventDefault();
 
+		if(userName.trim().length === 0 || userAge.trim().length === 0 || +userAge < 1){
+			props.throwError({
+				title:"Invalid input",
+				message:"Please provide a valid name and an age greater than 1"
+			});
+			return;
+		}
+
 		props.onAddUser({
 			id: Math.random(),
 			name: userName,
-			age: userAge,
+			age: +userAge,
 		});
+
+		setUserName("");
+		setUserAge("");
 	};
 
 	const userNameHandler = (event) => {
@@ -19,22 +32,28 @@ const InputForm = (props) => {
 	};
 
 	const userAgeHandler = (event) => {
-		setUserAge(+event.target.value);
+		setUserAge(event.target.value);
 	};
 
 	return (
-		<form onSubmit={submitHandler}>
+		<form className={props.className} onSubmit={submitHandler}>
 			<div>
 				<label>Username</label>
-				<input onChange={userNameHandler} type="text" />
+				<input onChange={userNameHandler} value={userName} type="text" />
 			</div>
 			<div>
 				<label>Age (Years)</label>
-				<input onChange={userAgeHandler} type="numbers" min="0" max="150" />
+				<input
+					onChange={userAgeHandler}
+					value={userAge}
+					type="numbers"
+					min="0"
+					max="150"
+				/>
 			</div>
-			<button className="button" type="submit">
+			<Button className="button" type="submit">
 				Add User
-			</button>
+			</Button>
 		</form>
 	);
 };

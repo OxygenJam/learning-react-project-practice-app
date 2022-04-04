@@ -5,7 +5,7 @@ const UserList = (props) => {
 
 	if (props.items.length > 0) {
 		renderUser = props.items.map((d) => {
-			return <UserItem user={d} delete={props.onDelete} />;
+			return <UserItem user={d} delete={props.onDelete} key={d.id}/>;
 		});
 	}
 
